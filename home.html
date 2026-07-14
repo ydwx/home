@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الخندق | XLS</title>
+    <style>
+        :root {
+            --bg: #050505;
+            --gold: #d4af37;
+            --gold-dim: #7a6a3f;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Georgia', 'Times New Roman', serif;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* زخرفة خطوط ذهبية في الزوايا */
+        .corner-decoration {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            border-color: var(--gold-dim);
+            border-style: solid;
+            opacity: 0.3;
+            z-index: 0;
+        }
+        .corner-tl {
+            top: 20px; left: 20px;
+            border-width: 1px 0 0 1px;
+        }
+        .corner-tr {
+            top: 20px; right: 20px;
+            border-width: 1px 1px 0 0;
+        }
+        .corner-bl {
+            bottom: 20px; left: 20px;
+            border-width: 0 0 1px 1px;
+        }
+        .corner-br {
+            bottom: 20px; right: 20px;
+            border-width: 0 1px 1px 0;
+        }
+
+        /* دائرة مركزية ذهبية خافتة */
+        .central-circle {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            border: 1px solid var(--gold);
+            opacity: 0.08;
+            z-index: 0;
+            animation: pulse 4s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.08; }
+            50% { transform: scale(1.05); opacity: 0.12; }
+        }
+
+        /* شعار XLS الرئيسي */
+        .logo {
+            position: relative;
+            z-index: 1;
+            font-size: 8rem;
+            font-weight: bold;
+            color: transparent;
+            -webkit-text-stroke: 1px var(--gold-dim);
+            background: linear-gradient(180deg, var(--gold) 0%, var(--gold-dim) 80%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            opacity: 0.9;
+            text-shadow: 0 0 30px rgba(212,175,55,0.3), 0 0 60px rgba(212,175,55,0.1);
+            animation: float 3s infinite ease-in-out;
+            letter-spacing: 20px;
+            direction: ltr;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* توقيع صغير أسفل الشعار */
+        .subtitle {
+            position: absolute;
+            bottom: 80px;
+            z-index: 1;
+            color: var(--gold-dim);
+            font-size: 0.9rem;
+            letter-spacing: 6px;
+            opacity: 0.7;
+            direction: rtl;
+        }
+
+        /* جزيئات ذهبية متحركة */
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--gold);
+            border-radius: 50%;
+            z-index: 0;
+            animation: drift linear infinite;
+            opacity: 0;
+        }
+
+        @keyframes drift {
+            0% { transform: translate(0, 0); opacity: 0; }
+            10% { opacity: 0.8; }
+            90% { opacity: 0; }
+            100% { transform: translate(var(--x), var(--y)); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- زخارف الزوايا الأربع -->
+    <div class="corner-decoration corner-tl"></div>
+    <div class="corner-decoration corner-tr"></div>
+    <div class="corner-decoration corner-bl"></div>
+    <div class="corner-decoration corner-br"></div>
+
+    <!-- دائرة مركزية ذهبية خافتة -->
+    <div class="central-circle"></div>
+
+    <!-- الشعار الرئيسي XLS -->
+    <div class="logo">XLS</div>
+
+    <!-- توقيع الخندق -->
+    <div class="subtitle">⚔️ الخندق ⚔️</div>
+
+    <script>
+        // توليد جزيئات ذهبية متحركة بشكل عشوائي
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            document.body.appendChild(particle);
+
+            const startX = Math.random() * window.innerWidth;
+            const startY = Math.random() * window.innerHeight;
+            const endX = (Math.random() - 0.5) * 400;
+            const endY = (Math.random() - 0.5) * 400;
+
+            particle.style.left = startX + 'px';
+            particle.style.top = startY + 'px';
+            particle.style.setProperty('--x', endX + 'px');
+            particle.style.setProperty('--y', endY + 'px');
+            particle.style.animationDuration = (Math.random() * 6 + 4) + 's';
+
+            // إزالة الجزيء بعد انتهاء الحركة
+            setTimeout(() => {
+                particle.remove();
+            }, 10000);
+        }
+
+        // إنشاء جزيء جديد كل فترة
+        setInterval(createParticle, 800);
+        for (let i = 0; i < 10; i++) setTimeout(createParticle, i * 500);
+    </script>
+
+</body>
+</html>
